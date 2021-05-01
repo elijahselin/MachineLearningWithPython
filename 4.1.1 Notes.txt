@@ -1,0 +1,160 @@
+Module 4 - Clustering
+
+***Module Introduction and Learning Objectives***
+
+Module Introduction
+In this module, you will learn about different clustering approaches. You will learn how to use clustering for customer segmentation, grouping same vehicles, and for weathering stations. You will understand 3 main types of clustering including Partitioned-based Clustering, Hierarchical Clustering, and Density-based clustering.
+
+Learning Objectives
+*To understand different types of clustering algorithms.
+*To apply clustering on different types of data sets.
+
+
+
+***Intro to Clustering***
+
+Clustering can group data only unsupervised, based on the similarity of customers to each other.
+
+A cluster is a group of objects that are similar to other objects in the cluster and dissimilar to data points in other clusters.
+
+Clustering applications
+Retail/marketing: identifying buying patterns of customers; recommending new books or movies to new customers
+Banking: fraud detection in credit card use; identifying clusters of customers (e.g. loyal vs churn)
+Insurance: fraud detection in claims analysis; insurance risk of customers
+Publication: autocategorizing news based on their content; recommending similar news articles
+Medicine: characterizing patient behavior
+Biology: Clustering genetic markers to identify family ties
+
+Why clustering?
+*Exploratory data analysis
+*Summary generation
+*Outlier detection
+*Finding Duplicates
+*Pre-processing step
+
+Clustering algorithms
+*Partitioned-based clustering (relatively efficient, e.g. k-Means, k-Median, Fuzzy c-Means, good for medium and large sized databases)
+*Hierarchical Clustering (produces trees of clusters, e.g. agglomerative, divisive, intuitive, good for small datasets)
+*Density based clustering (produces arbitrary shaped clusters, e.g. DBSCAN, good for spatial clusters or when there is noise in your data set)
+
+
+
+***Intro to k-Means***
+
+Partitioning clustering
+K-means divides the data into non-overlapping subsets (clusters) without any clustering internal structure
+Objects within a cluster are very similar while objects across different clusters are dissimilar.
+k-Means tries to minimize the distance between points within a cluster and maximize the space between clusters.
+Minkowski distance is used to calculate the distance between two customers. If there is more than one feature, the features have to be normalized.
+There are different kinds of ways to measure the distance between points (euclidean, cosine similarity, average distance, etc.)
+
+1. Initialize k = 3 centroids randomly; we can pick the centroids one of two ways: either pick 3 random observations from our data set, or three random points by our choice
+2. Distance calculation
+3. Assign each point to the closest centroid
+error is calculated based on their distance from the centroids.
+4. Compute the new centroids for each cluster.
+The mean is taken of the datapoints in each cluster and the centroid is moved to the mean so the centroid is now in the center of the datapoints in its cluster.
+5. Repeat until there are no more changes.
+
+It is common to run the entire algorithm multiple times with different starting conditions to ensure the best clusters form from the process.
+
+
+
+***More on k-Means***
+
+How a k-Means algorithm works:
+1. Randomly placing k centroids, one for each cluster.
+2. Calculate the distance of each point from each centroid.
+3. Assign each data point (object) to its closest centroid, creating a cluster.
+4. Recalculate the position of the k centroids.
+5. Repeat the steps 2-4, until the centroids no longer move.
+
+k-Means accuracy
+External approach
+*Compare the clusters with the ground truth, if it is available (it won't always be because the algorithm is unsupervised)
+Internal approach
+* Average the distance between data points within a cluster
+
+Choosing the right k value is often a fundamental question when working with this type of algorithm.
+Commonly, the algorithm is simply run multiple times with varying values of k to find the best value. And using the mean distance between data points and the cluster's centroid (the cluster's density about the centroid) as a metric to determine how effective that value of k is
+Increasing k always reduces this metric, but the value at which the rate the error is decreasing sharply decreases is the best value for k. This is called the elbow method.
+
+k-Means recap
+*Good for medium and large sized databases (relatively efficient)
+*Produces sphere-like clusters
+*Needs number of clusters (k), which is difficult to narrow down to the best value.
+
+
+
+***Intro to Hierarchical Clustering***
+
+Hierarchical clustering algorithms build a hierarcy of clusters where each node is a cluster consisting of the clusters of its daughter nodes.
+
+Two Types of hierarchical clustering: divisive and agglomerative
+Divisive is top down, so you start with all observations in a large cluster and break it down into smaller pieces.
+Agglomerative is the opposite of divisive, where each observations starts in its own cluster and pairs of clusters are merged together as they move up the hierarchy. 
+Agglomerative is the more popular approach for data scientists.
+
+Data can be multidimensional
+Measure the distances between data points
+Create a cluster between the two data points that are the most similar (have the least distance between them)
+Update the distances with the distance to the new cluster being a centroid.
+Repeat until there is one cluster that contains all data points or until you reach a certain threshold of similarity.
+
+
+
+***More on Hierarchical Clustering***
+
+Agglomerative algorithm
+1. Create n clusters, one for each data point
+2. Compute the proximity matrix
+3. Repeat
+    i. Merge the two closest clusters
+    ii. update the proximity matrix
+4. Until only a single cluster remains
+
+Measuring the distance between clusters with multiple data points:
+1. Single Linkage Clustering - Minimum distance between clusters
+2. Complete Linkage Clustering - Maximum distance between clusters
+3. Aberage Linkage Clustering - Average distance between clusters
+4. Centroid Linkage Clustering - Distance between cluster centroids
+
+Hierarchical clustering advantages and disadvantages:
+Advantages
+*Doesn't require number of clusters to be specified
+*Easy to implement
+*Produces a dendrogram, which helps with understanding the data
+Disadvantages
+*Can never undo any previous steps throughout the algorithm
+*Generally has long runtimes
+*Sometimes difficult to identify the number of clusters by the dendrogram
+
+In comparison to K-means
+K means is much more efficient, requires the number of clusters to be specified, gives onlyone partitioning of the data based on the predefined number of clusers, and could potentially return different clusters each time it is run due to random initialization of centroids.
+While Hierarchical Clustering can be slow for large datasets, does not require the number of clusters to run, gives more than one partitioning depending on the resolution, and always generates the same clusters.
+
+
+
+***DBSCAN***
+
+Density based clustering is appropriate to use when examining spatial data.
+
+DBSCAN is a popular type of density based clustering andis particularly effective for tasks like class identification on a spatial context. It isn't affected by noise.
+
+DBSCAN (Denisty-Based Spatial Clustering of Applications with Noise)
+works based on density of objects
+Definied by two parameters:
+R(radius of neighborhood) - Radius that if inclusdes enough number of points within, we call it a dense area
+M(min number of neighbors) - The minimum number of data points we want in a neighborhood to define a cluster
+
+Three types of points in a DBSCAN cluster
+Core point: A data point is a core point if within our neighborhood of the point there are at least M points
+Border Point: A data point is a border point if A; its neighbourhood contains less than M data points or B; it is reachable from some core point
+Outlier Point: a point that does not satisfy the conditions to be either a border point or a core point
+
+A cluster is atleast one core point, pluss all reachable core points pluss all of their borders
+
+Advantages
+1. Arbitrarily shaped clusters
+2. Robust to outliers
+3. Does not require specification of the number of clusters

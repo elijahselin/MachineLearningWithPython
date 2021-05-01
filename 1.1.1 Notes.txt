@@ -1,0 +1,136 @@
+Module 1 - Introduction to Machine Learning
+
+***Module Introduction and Learning Objectives***
+
+Learning Objectives
+* To give examples of Machine Learning.
+* To demonstrate the Python libraries for Machine Learning.
+* To classify Supervised vs. Unsupervised Algorithms.
+
+***Introduction to Machine Learning***
+
+Process:
+Clean your data
+select the proper algorithm for building a prediction model
+Train your model to understand patterns in the data
+Use the model to predict new or unknown samples
+
+Machine Learning is the subfield of computer science that give computers the abilit to learn without being explicitly programmed
+
+Techniques used in machine Learning:
+Regression/Estimation - for prdeicting a continuous value
+Classification - Predicting the item class/category of a case
+Clustering - Finding the structure of data; summarization
+Associating frequent co-occurring items/events
+Anomaly detection - discovering abnormal and unusual cases
+Sequence Mining - predicting next events; click-stream
+Dimension Reduction - reducing the size of data
+Recommendation Systems - recommending items
+
+What is the difference between AI, machine learning, and deep learning?
+
+Artificial Intelligence is a broad field that encompasses all aspects in which computers are programmed to behave in an intelligent, human-like way.
+
+Machine Learning is a branch of AI that covers the statistical part of artificial intelligence. It teaches the computer how ot solve problems by looking at hundreds or thougsance of examples, learning from them, and then using that experience to solve the same porblem in new situations.
+
+Deep learning is a special field of Machine Learning where computers can actually learn and make intelligent decisions on their own. It involves a deeper level of automation in comparison to other machine learning algorithms.
+
+
+
+***Python for Machine Learning***
+
+Python libraries for machine learning:
+
+NumPy: math library to work with N-dimensional arrays in Python Enables efficient and effective computation. Necessary for using arrays, dictionaries, functions, datatypes, and working with images.
+
+SciPy: a collection of numerical algorithms and domain specific toolboxes including signal processing, optimization, stats, etc. Good for scientific and high performance computation.
+
+Matplotlib: a popular plotting package that provides 2D and 3D plotting.
+
+Pandas provides high performance, easy to use data structures. Has functions for data importing, manipulation and analysis. More specifically, it offers data structures and operations for manipulating numerical tables and timeseries.
+
+SciKit Learn is a collection of algorithms and tools for machine learning which is our focus here and which will be used extensively in this course.
+
+
+SciKit learn in depth
+
+free machine learning library for python
+has most commonly used machine learning algorithms
+works with numpy and scipy
+good documentation
+easy to implement
+Most of the tasks that need to be done in a machine learning pipeline are implemented already in scikit learn:
+
+1. Data Pre-processing
+2. feature selection
+3. feature extraction
+4. train test splitting
+5. define algorithms
+6. fit the models
+7. tune parameters
+8. prediction evaluation
+9. and exporting the model
+
+Machine learning algorithms benefit from standardizatin of the data set. Outliers and different scales fields in your data set need to be fixed
+
+Preprocessing package of scikit learn provides several common utility functions and transformer classes to change raw feature vectors into a suitable form of vector for modeling.
+
+You have to split your dataset into train and test sets to train your model and then test the model's accuracy separately. Scikit Learn can split arrays or matrices into random train and test subsets for you in one line of code.
+
+Then you can set up your algorithm and train your model with the train set by passing our training set to the fit method. Then you can predict values using the trained model
+
+You can also use the different metrics to evaluate your model accuracy.
+
+Example***
+
+from sklearn import preprocessing
+X = preprocessing.StandardScaler().fit(X).transform(X)
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = test_train_split(X, y, test_size = 0.33)
+
+from sklearn import svm
+clf = svm.SVC(gamma = 0.001, C=100.)
+
+clf.fit(X_train, y_train)
+clf.prdeict(X_test)
+
+from sklearn.metrics import confusion_matrix
+print(confution_matrix(y_test, yhat, lables = [1, 0]))
+
+import pickle
+s = pickle.dumps(clf)
+
+
+
+***Supervised vs. Unsupervised***
+
+Supervise means to observe and direct the execution of a task, project, or activity. (In our case, supervising a machine learning model.)
+
+How do we supervise a machine learning model?
+
+We 'teach the model,' then with that knowledge, it can predict unknown or future instances.
+
+How do we teach a model?
+
+We teach the model by training it with some data from a labeled dataset. It has a variety of attibutes and a pre allocated classification for each row on the dataset.
+
+You can have two types of data, numeric and categorical. Machine learning algorithms typically use numeric data.
+
+Classification is the process of predicting a discrete class label, or category.
+
+Regression is the process of predicting a continuous value as opposed to predicting a categorical value in classification.
+
+What does unsupervised learning means?
+
+We do not supervise the model, we let the model work on its own to discover information that may not be visible to the human eye. This means the unsupervised algorithm trains on the dataset, and draws conclusions on unlabeled data. Generally speaking, unsupervised learning has more difficult algorithms than supervised learning since we know little to no information about the data, or the outcomes that are to be expected.
+
+Dimension reduction, density estimation, market basket analysis, and clustering are the most widely used unsupervised machine learning techniques.
+
+Dimensionality reduction and/or feature selection play a large role in this by reducing redundant features to make the classification easier.
+
+Market basket analysis is a modeling technique based upon the theory that if you buy a certain group of items, you're more likely to buy another group of tiems.
+
+Density estimation is a very simple concept that is mostly used to explore the data to find some structure within it.
+
+Clustering is usd for grouping data points or objects that are somehow similar. Clustering is used mostly for discovering structure, summarization and anomaly detection.

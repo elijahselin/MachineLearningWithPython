@@ -1,0 +1,326 @@
+I decided to practice writing the code from the labs out so that I would be better aquainted with the code.
+
+***3.2.1 Lab - KNN***
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn import preprocessing
+%matplotlib inline
+
+df = pd.read_csv('3.3.1 teleCust1000t.csv)
+df.head()
+
+df['custcat'].value_counts()
+
+df.hist(column = 'income', bins = 50)
+
+df.columns
+
+X = df[['region', 'tenure', 'age', 'marital', 'address', 'income', 'ed', 'employ', 'retire', 'gender', 'reside']].values
+
+y = df['custcat'].values
+
+X = preprocessing.StandardScaler().fit(X).transform(X.astype(float))
+
+from slearn.model_election import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 4)
+('Train set:', X_train.shape, y_train.shape)
+('Test set:', X_test.shape, y_test.shape)
+
+from sklearn.neighbors import KNeighborsClassifier
+
+k = 4
+
+neigh = KNeighborsClassifier(n_neighbors = k).fit(X_train, y_train)
+
+yhat = neigh.predict(X_test)
+
+from sklearn import metrics
+print("Train set Accuracy: ", metrics.accuracy_score(y_train, neigh.predict(X_train)))
+print("Test set Accuracy: ", metrics.accuracy_score(y_test, yhat))
+
+Ks = 10
+mean_acc = np.zeros((Ks - 1))
+std_acc = np.zeros((Ks - 1))
+
+for n in range(1, Ks):
+    neigh = KNeighborsClassifier(n_neighbors = n).fit(X_train, y_train)
+    yhat = neigh.predict(X_test)
+    mean_acc[n - 1] = metrics.accuracy_score(y_test, yhat)
+    std_acc[n-1] = np.std(yhat == y_test) / np.sqrt(yhat.shape[0])
+
+plt.plot(range(1,Ks), mean_acc, 'g')
+plt.fill_between(range(1, Ks), mean_acc - 1 * std_acc, mean acc + 1 * std_acc, alpha = 0.1)
+plt.fill_between(range(1, Ks), mean_acc - 3 * std_acc, mean_acc + 3 * std_acc, alpha = 0.1, color = 'green')
+plt.legend(('Accuracy ', '+/- 1xstd', '+/- 3xstdd'))
+plt.ylabel('Accuracy')
+plt.xlabel('Number of Neighbors (K)')
+plt.tight_layout()
+plt.show()
+
+print("The best accuracy wa with", mean_acc.max(), "with k=", mean_acc.argmax() + 1)
+
+
+
+***3.2.2 Lab - Decision Trees***
+
+import numpy as np
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+
+my_data = pd.read_csv("3.3.2 drug200.csv", delimiter = ',')
+
+X = mydata[['Age', 'Sex', 'BP', 'Cholesterol', 'Na_to_K']].values
+
+from sklearn import preprocesssing
+le_sex = preprocessing.LabelEncoder()
+le_sex.fit(['F', 'M'])
+X[:,1] = le_sex.transform(X[:,1])
+
+le_BP = preprocessing.LabelEncoder()
+le_BP.fit(['LOW', 'NORMAL', 'HIGH'])
+X[:,2] = le_BP.transform(X[:,2])
+
+le_Chol = prepprocessing.LabelEncoder()
+le_Chol.fit(['NORMAL', 'HIGH'])
+X[:,3] = le_Chol.transform(X[:, 3])
+
+y = my_data["Drug"]
+
+from sklearn.model_selection import train_test_split
+
+X_trainset, X_testset, y_trainset, y_testset = train_test_split(X, y, test_size = 0.3, random_state = 3)
+
+drugTree = DecisionTreeClassifier(criterion = 'entropy', max_depth = 4)
+drugTree # shows the default parameters
+
+drugTree.fit(X_trainset, y_trainset)
+
+predTree = drugTree.predict(X_testset)
+print(predTree[0:5])
+print(y_testset[0:5])
+
+from sklearn import metrics
+import matplotlib.pyplot as plt
+print("DecisionTree's Accuracy: ", metrics.accuracy_score(y_testset, predTree))
+
+from io import StrigIO
+import pydotplus
+import matplotlib.image as mpimg
+from sklearn import tree
+%matplotlib inline
+
+dot_data = StringIO()
+filename = "3.3.2 drugtree.png"
+featureNames = my_data.columns[0:5]
+out = tree.export_graphiz(drugTree, feature_names = featureNames, out_file = dot_data, class_names = np.unique(y_trainset), filled = True, special_characters = True, rotate = False)
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+graph.write_png(filename)
+img = mpimg.imread(filename)
+plt.figure(figsize = (100,200))
+plt.imshow(img, interpolation = 'nearest')
+
+
+
+***3.2.3 Lab - Logistic Regression***
+
+!pip install scikit-learn==0.23.1
+
+import panas as pd
+import pylab as pl
+import numpy as np
+import scipy.optimize as opt
+from sklearn import preprocessing
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+churn_df = pd.read_csv("3.3.4 ChurnData.csv")
+chrun_df.head()
+
+churn_df = chrn_df[['tenure', 'age', 'address', 'income', 'ed', 'employ', 'equip', 'wireless', 'churn']]
+churn_df['churn'] = chrun_df['churn'].astype('int')
+churn_df.head()
+
+print("Rows:", churn_df.shape[0])
+print('Columns:', churn_df.shape[1])
+print('Column Names:', churn_df.columns)
+
+X = np.asarray(chrun_df[['tenure', 'age', 'address', 'income', 'ed', 'employ', 'equip']])
+X[0:5]
+
+y = np.asarray(chrun_df['churn'])
+y[0:5]
+
+from sklearn import preprocessing
+X = preprocessing.StandardScaler().fit(X).transform(X)
+X[0:5]
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 4)
+print('Train set:', X_train.shape, y_train.shape)
+print('Test set:', X_test.shape, y_test.shape)
+
+from sklean.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix
+LR = LogisticRegression(C = 0.01, solver = 'liblinear').fit(X_train, y_train)
+LR
+
+yhat = LR.predict(X_test)
+yhat
+
+yhat_prob = LR.predict_proba(X_test)
+yhat_prob
+
+from sklearn.metrics import jaccard_score
+jaccard_score(y_test, yhat, pos_label = 0)
+
+from sklearn.metrics import classification_report, confusion_matrix
+import itertools
+def plot_confusion_matrix(cm, classes,
+                            normalize = False,
+                            title = 'Confusion matrix',
+                            cmap = plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting 'normalize = True'.
+    """
+    if normalize:
+        cm = cm.astype('float') / cm.sum(axis = 1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusionmatrix, without normalization')
+    print(cm)
+    
+    plt.imshow(cm, interpolation = 'nearest', cmap = cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation = 45)
+    plt.yticks(tick_marks, classes)
+    
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2.
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i , format(cm[i, j], fmt),
+                horizontalalignment = 'center',
+                color = 'white' if cm[i, j] > thresh else 'black')
+    plt.tight_layout()
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+print(confusion_matrix(y_test, yhat, labels = [1, 0]))
+
+cnf_matrix = confusion_matrix(y_test, yhat, labels = [1, 0])
+np.set_printoptions(precision = 2)
+plt.figure()
+plot_confusion_matrix(cnf_matrix, classes = 'churn1', 'churn = 0', normalize = False, title = 'Confusion matrix')
+
+print(classification_report(y_test, yhat))
+
+from sklearn.metrics import log_loss
+log_loss(y_test, yhat_prob)
+
+LR2 = LogisticRegression(C = 0.05, solver = 'nweton-cg').fit(X_train, y_train)
+yhat_prob2 = LR2.predict_proba(X_test)
+print('Logloss: %.2f' % log_loss(y_test, yhat_prob2))
+
+
+
+***3.2.4 Lab - SVM (Support Vector Machines)***
+
+!pip install scikit-learn == 0.23.1
+
+import pandas as pd
+import pylab as pl
+import numpy as np
+import scipy.optimize as opt
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+%matplotlib inline
+import matplotlib.pyplot as plt
+
+cell_df = pd.read_csv('3.3.5 cell_samples.csv')
+cell_df.head()
+
+#semicolons because they're there in the original :/
+ax = cell_df[cell_df['class'] == 4 ][0:50].plot(kind = 'scatter', x = 'Clump', y = 'Unifsize', color = 'DarkBlue', label = 'malignant');
+cell_df[cell_df['Class'] == 2][0:50].plot(kind = 'scatter', x = 'Clump', y = 'UnifSize', color = 'Yellow', label = 'benign', ax = ax);
+plt.show()
+
+cell_df.dtypes
+
+cell_df = cell_df[pd.to_numeric(cell_df['BareNuc'], errors = 'coerce').notnull()]
+cell_df['BareNuc'] = cell_df['BareNuc'].astype('int')
+cell_df.dtypes
+
+feature_df = cell_df[['Clump', 'UnifSize', 'UnifShape', 'MargAdh', 'SingEpiSize', 'BareNuc', 'BlandChrom', 'NormNucl', 'Mit']]
+X= np.asarray(feature_df)
+X[0:5]
+
+cell_df['Class'] = cell_df['Class'].astype('int')
+y = np.asarray(cell_df['Class'])
+y[0: 5]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 4)
+print('Train set:', X_train.shape, y_train.shape)
+print('Test set:', X_test.shape, y_test.shape)
+
+from sklearn import svm
+clf = svm.SVC(kernel = 'rbf')
+clf.fit(X_train, y_train)
+
+yhat = clf.predict(X_test)
+yhat[0:5]
+
+from sklearn.metrics import classification_report, confusion_matrix
+import itertools
+
+df plot_confusion_matrix(cm, classes,
+                         normalize = False,
+                         title = 'Confusion Matrix',
+                         cmap = plt.cm.Blues):
+    """
+    This function prints and plots the confusion matrix.
+    Normalization can be applied by setting 'normalize = True'.
+    """
+    if normalize:
+        cm = cm.astye('float') / cm.sum(axis = 1)[:, np.newaxis]
+        print("Normalized confusion matrix")
+    else:
+        print('Confusion matrix, without normalization')
+    print(cm)
+    
+    plt.imshow(cm, interpolation = 'neares', cmap = cmap)
+    plt.title(title)
+    plt.colorbar()
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation = 45)
+    plt.yticks(tick_marks, classes)
+    fmt = '.2f' if normalize else 'd'
+    thresh = cm.max() / 2
+    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+        plt.text(j, i, format(cm[i, j], fmt),
+                 horizontal alignment = 'center',
+                 color = 'white' if cm[i, j] > thresh else 'black')
+    plt.tight_layout(
+    plt.ylabel('True lable')
+    plt.xlabel('Predicted label')
+
+cnf_matrix = confusion_matrix(y_test, yhat, labels = [2, 4])
+np.set_printoptions(precision = 2)
+print(classification_report(y_test, yhat))
+plt.figure()
+plot_confusion_matrix(cnf_matrix, classes = ['Benign(2)', 'Malignant(4)'], normalize = False, title = 'Confusion Matrix')
+
+from sklearn.metrics import f1_score
+f1_score(y_test, yhat, average = 'weighted')
+
+from sklearn.metrics import jaccard_score
+jaccard_score(y_test, yhat, pos_label = 2)
+
+clf2 = svm.SVC(kernel = 'linear')
+clf2.fit(X_train, y_train)
+yhat2 = clf.predict(X_test)
+print('AvgF1-core: %.4f' % f1_score(y_test, yhat2, average = 'weighted'))
+print('Jaccard score: %.4f' % jaccard_score(y_test, yhat2, pos_label = 2))
+

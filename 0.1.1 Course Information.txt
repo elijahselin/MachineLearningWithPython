@@ -1,0 +1,114 @@
+***File Nomenclature***
+0. Course Information
+	1. Course Information
+		1. Course Information.txt
+1. Introduction to Machine Learning Module
+    1. Notes
+        1. Notes.txt
+2. Regression Module
+    1. Notes
+        1. Notes.txt
+    2. Labs
+        1. Lab - Simple Linear Regression.ipynb
+        2. Lab - Multiple Linear Regression.ipynb
+        3. Lab - Polynomial Regression.ipynb
+        4. Lab - Non-linear Regression.ipynb
+    3. Lab Data
+        1. FuelConsumptionCo2.csv
+        2. china_gdp.csv
+3. Classification Module
+    1. Notes
+        1. Notes.txt
+        2. Lab Code Practice.txt
+    2. Labs
+        1. Lab - KNN.ipynb
+        2. Lab - Decision Trees.ipynb
+        3. Lab - Logistic Regression.ipynb
+        4. Lab - SVM (Support Vector Machines).ipynb
+    3. Lab Data and Output
+        1. teleCust1000t.csv
+        2. drug200.csv
+        3. drugtree.png
+        4. ChurnData.csv
+        5. cell_samples.csv
+4. Clustering Module
+    1. Notes
+        1. Notes.txt
+        2. Lab Code Practice.txt
+    2. Labs
+        1. Lab - k-Means.ipynb
+        2. Lab - Agglomerative Clustering.ipynb
+        3. Lab - DBSCAN Clustering.ipynb
+    3. Lab Data and Output
+        1. Cust_Segmentation.csv
+        2. cars_clus.csv
+        3. weather-stations20140101-20141231.csv
+5. Recommender Systems Module
+    1. Notes
+        1. Notes.txt
+    2. Labs
+        1. Lab - Content-based Recommendation Systems.ipynb
+        2. Lab - Collaborative Filtering on Movies.ipynb
+    3. Lab Data and Output
+        1. links.csv
+        2. movies.csv
+        3. ratings.csv
+        4. tags.csv
+        5. README.txt
+6. Final Project
+    1. Final Project
+        1. Machine Learning for Data Science Final Project.ipynb
+
+
+
+***General Information***
+
+This course dives into the basics of Machine Learning using an approachable, and well-known programming language, Python.  We will be reviewing two main components:
+
+the purpose of Machine Learning and where it applies to the real world. 
+a general overview of Machine Learning topics, such as supervised vs unsupervised learning,  model evaluation, and Machine Learning algorithms. 
+In this course, you will practice with real-life examples of Machine Learning and see how it affects society in ways you may not have guessed!
+
+By just putting in a few hours a week for the next several weeks, you'll gain:
+
+new skills to add to your resume, such as Regression, Classification, Clustering, Sci-kit Learn and SciPy 
+new projects that you can add to your portfolio, including cancer detection, predicting economic trends, predicting customer churn, recommendation engines, and many more.
+a certificate in machine learning to prove your competency, and share it anywhere you like online or offline, such as LinkedIn profiles and social media.
+
+
+
+***Learning Objectives and Syllabus***
+
+In this course, you will:
+
+Explore examples of Machine Learning and the libraries and languages used to create them.
+Apply the appropriate form of regression to a data set for estimation.
+Apply an appropriate classification method for a particular Machine Learning challenge.
+Use the correct clustering algorithms on different data sets.
+Explain how recommendation systems work, and implement one on a data set.
+Demonstrate your understanding of Machine Learning in an assessed project.
+
+-Syllabus-
+
+Module 1 - Introduction to Machine Learning
+What is Machine Learning?
+
+Module 2 - Regression
+Linear Regression
+Non-Linear Regression
+
+Module 3 - Classification
+K-Nearest Neighbours
+Decision Trees
+Logistic Regression
+Support Vector Machine
+
+Module 4 - Clustering
+k-Means Clustering
+Hierarchical Clustering
+Density-based Clustering
+
+Module 5 - Recommender Systems
+Content-based Recommendation Engines
+
+Final Assignment

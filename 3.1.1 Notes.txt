@@ -1,0 +1,251 @@
+Module 3: Classification
+
+***Learning Objectives***
+*To Understand different classification methods.
+*To apply classification algorithms on variaous data set to solve real world problems.
+*To understand evaluation methods in Classification
+
+***Introduction to Classification***
+
+Classification:
+A supervised learning approach
+Categorizes some unknown items into a discrete set of categories or "classes"
+Target attribute is a categorical variable.
+
+Given a set of training data points along with the target labels, classification determines the class label for an unlabeled test case.
+
+There are binary classifier models and multi-class classifier models.
+
+Types of classification algorithms list:
+
+Decision Trees (ID3, C4.5, C5.0)
+Naive Bayes
+Linear Discriminant Analysis
+k-Nearest Neighbor
+Logistic Regression
+Neural Networks
+Support Vector Machines (SVM)
+
+Of these we will only cover a few.
+
+
+
+***K-Nearest Neighbors***
+
+Given a dataset with predefined lavels, we need to build a model to be used to predict the class of a new or unknown case.
+
+If we were trying to predict what class a prediction would have, couldn't we just predict it'd have the same class as the closes known data point near to it?
+
+The issue with this is what if the nearest neighbor is an outlier or unlike other points in the area? Then the prediction wouldn't be accurate.
+
+What if we took 5 of the closes ones instead and went with which ever class was the most shared between those data points?
+
+this would make the k in the k nearest neighbors algorithm 5.
+
+K nearest neighbors is an algorithm that classifies cases based on their similarity ot other cases.
+
+How k-nearest neighbors works:
+1. Pick a value for K
+2. Calculate the distance of the unknown case from all cases in the dataset.
+3. Select the k-observations in the training data that are nearest to the unknown data point.
+4. Predict the response of the unknown data point using the most popular response value from the k-nearest neighbors.
+
+Finding the difference between observations uses Minkowski distance, which is the euclidean distance between two points in multi-dimensional space
+
+To find the distance between data points, we have to normalize our features to get an accurate dissimilarity measure.
+There are other dissimilarity measures too but it really depends on the dataset and domain that classification is being done in.
+
+Choosing the right K value.
+
+A low k value causes a highly complex model and tends to overfitting. It is not generalized enough to be used for out of sample cases.
+A high value for k leads to the model being overly generalized.
+
+Best way to find the best value for k is to do a training data/testing data split, and to train and test a model as you iterate through k values. Plot the accuracy measurement on a graph and pick the peak accuracy.
+
+K-nearest neighbors can be used for continuous values also (like regression), where the prediction is the average or median of its nearest neighbors.
+
+
+
+***Evaluation Metrics in Classification***
+
+Evaluation metrics explain the performance of a model by comparing the actual values with the vales predicted by the model.
+
+There are many different model evaluation metrics but here are three:
+Jaccard index (aka Jaccard similarity coefficient)
+F1-score
+Log Loss
+
+Jaccard index is is the size of the intersection divided by the size of the union of two label sets. if the entire set of predicted labels for a sample strictly matches with the true set, then the subset accuracy is 1.0. If it doesn't intersect at all, it is 0.
+
+F1-score
+Another way of looking at the accurasy of classifiers is to look at a confusion matrix. In a confusion matrix it shows the predictions in comparison with the actual values. Each row shows the actual labels in the test set and the columns show the predicted labels by classifier. A confusion matrix is very good at showing the model's ability to correctly predict or separate the classes.
+
+Precision is a measure of the accuracy provided that a class label has been predicted
+precision = true positive / (true positive + false positive)
+Recall is the positive rate
+recall = True Positive / (True Positive + False Negative)
+F1-socre is the harmonic average of precision and recall values
+F1-score = 2 x (prc x rec) / (prc + rec)
+The best value at 1 and it's worst at 0
+The average accuracy for this classifier is the average of the f1 scores of the labels.
+
+Both Jaccard and f1score can be used for multi-class classifiers.
+
+Log loss
+Sometimes the output of a classifier is the probability of a class label instead of the label, as the case can be with logistic regression.
+
+Logarithmic loss (log loss) measures the performance of a classifier where the predicted output is a probability between 0 and 1.
+the log loss of each row can be found using the log loss equation. Then the average log loss can be found across all of those labels.
+
+
+
+***Introduction to Decision Trees***
+
+Decision trees are built by splitting the training set into disting nodes, where one node contains all of or most of one category of the data. That node then splits into more features and then those features are split until all of the features have been covered. Decision trees are about testing an attribute and branching the cases based on the result of the test. Each internal node corresponds to a test and each branch corresponds to a result of the test, and each leaf node assigns a patient to a class.
+
+Constructing a decision tree:
+1. Choose an attribute from your datset.
+2. Calculate the significance of attribute in splitting of data.
+3. Split data based on the value of the best attribute.
+4. Go to step 1.
+
+
+
+***Building Decision Trees***
+
+Decisions Trees are built using recursive partitioning.
+Try each attribute to see if it would make for a good predictor for the target variable. It iterates through each of the variables until it finds the best one and then it uses it as the first node on the decision tree. This continues down each leaf until all of the features are used.
+
+The goal is to maximize predictiveness by minimizing impurity. Impurity being a mix of predictions for each leaf.
+
+Recursive partitioning is used to split the data set into segments by minimizing the impurity at each step. Impurity of nodes is calculated by entropy of data in the node.
+
+Entropy is the amount of information disorder or the amount of randomness in the data.
+
+We are looking for the smallest entropy in the nodes.
+Homogenous samples have an entropy of 0
+Equally mixed samples have an entropy of 1
+
+entropy = -p(A)log(p(A)) - p(B)log(p(B))
+p is the proportion of the category
+
+this is calculated by packages and libraries in python
+
+you want to pick nodes that will maximize information gain after splitting
+Information gain - the information that can increase the level of certainty after splitting
+information gain = [entropy before split] - [weighted entropy after split]
+
+information gain and entropy can be seen as opposites
+
+this process is continued until all attributes and leaves have been used/created
+
+
+
+***Intro to Logistic Regression***
+
+What is logistic regression?
+A statistical and machine learning technique for classifying records of a dataset based on the values of the input fields.
+Logistic regression is analogous to linear regression but tries to predict a categorical or discrete target field instead of a numeric one.
+Logistic regression predicts a variable which is binary (true/false, yes/no, etc.)
+It can predict multiclass classification also but is not covered in this video.
+
+What kind of problems can be solved by logistic regression?
+Finding the probability that something will or will not happen/succeed.
+
+In which situations do we use logistic regression?
+Use logistic regression if...
+...your data is binary.
+...you need probabilistic results.
+...when you need a linear decision boundary. (We can achieve a complex decision boundary using poolynomial processing as well but that is out of the scope for this lesson.)
+...you need to understand the impact of the feature. (can be found by looking at parameters and model coefficients)
+
+
+
+***Logistic Regression vs Linear Regression***
+
+The problem with using linear regression:
+A linear model returns a value, which then has to be put through a step function that defines yhat as being 0 or 1 based on the where the returned value sits relative to a threshold. This gives no regard for the size of the returned variable; anything greater than the threshold (or less than) is treated exactly the same. It doesn't return a probability of being one class or another.
+A solution to this problem is the sigmoid function. When the predictive model returns a number that is very big, the sigmoid function yields a value closer to one. When the predictive model returns a number that is very small, the sigmoid function yields a value closer to zero. 
+The output of the sigmoid can be shown as a probability.
+
+The training process:
+1. Initialize theta (with random values as with most machine learning algorithms)
+2. Calculate yhat = sigmoid function of theta transpose x for a row
+3.Compare the output of yhat with the actual output of customer, y, and record it as error
+4. Calculate the error for all customers.
+5. Change the theta to reduce the cost.
+6. go back to step 2
+
+Cost is a functions that shows how poorly the algorithm learns
+
+Gradient descent is one of the most popular techniques used to find how you should change your parameters.
+There are a variety of ways to stop iteration but you stop training by calculating the accuracy of your model and stop when the accuracy is satisfactory.
+
+
+
+***Logistic Regression Training***
+
+the cost function is the difference between the actual values of y and our model ouput (yhat)
+
+Then find the global minimum point of the cost function and it will shwo the best parameters to use for the model.
+
+Finding the global minimum is very difficult and so instead we should find another cost function that has the same behaviour but is easier to find its minimum point.
+
+We find the best parameters for our model by minimizing cost function.
+We minimize the cost function by using gradient descent.
+Gradient descent is a technique using the derivative of a cost function to change the parameter values, in oreder to minimize the cost.
+
+In gradient descent, imagine you plot the cost function against the parameters and it makes a curve. Then you pick a random point and then make a step along the curve. If you're going down the curve, you can take more steps. The steeper the slope, the more steps you can take. You continue this process until you reach the bottom of the curve, or a flat surface, which is the minimum of the cost function.
+
+We want to move in the direction of the negative derivative of the cost function at the given point. Large slopes indicate that we are far from the minimum and should take larger steps. Small slopes would indicate that we are close to the minimum and that we should take smaller steps.
+
+new parameters are calculated from the old parameters minus the gradient vector
+
+another parameter, mu, aka the learning rate gives additional control on how fast we move on the surface.
+
+Gradient descent indicates direction. Learning rate indicates speed (or length of steps to take)
+
+Training Algortihm Recap
+1. initialize the parameters randomly
+2. feed the cost function with training set, and calculate the error
+3. Calculate the gradient of cost function
+4. Update the weights with new values
+5. Go to step 2 until cost is small enough
+6. Predict the new customer X
+
+***Support Vector Machine***
+
+A Support Vector Machine is a supervised algorithm that can classify cases by finding a separator. SVM works by first mapping data to a high dimensional feature space so that data points can be categorized even when the data are not otherwise linearly separable. Then, a separator is estimated for the data. The dat should be transformed ins such a ay that a separator could be drawn as a hyperplane.
+
+
+How do we transfer data in such a way that a spearator could be drawn as a hyperplane?
+
+Tranformation is using a function to expand the number of dimensions a dataset has so that a separator can be used on it. Mapping data into a higher-dimensional space is called kernelling. The function used as the kernel function.
+
+Kernelling Functions:
+*Linear
+*Polynomial
+*RBF
+*Sigmoid
+
+These are already implemented in libraries for many data science programming languages.
+
+
+How can we find the best or optimized hyperplane separator after transformation?
+
+Trying to find the best hyperplane that separates different data. In doing this, we want the hyperplane that has the largest separation (or margin) between the two classes. Example closest to the hyperplane are support vectors and only they matter for achieving our goal. We want the maximum distance between support vectors.
+
+Though a lot of (uncovered) math we find the hyperplane from the training data using an optimization procedure that maximizes the margin. This gives a line which separates values on the plot and you can simply plug in input values into the line equation and find if the point is above or below the line. If the equation returns a value greater than 0, then the point belongs to the class that is above the line, and vice versa.
+
+
+SVM Advantages and Disadvantages
+Advantages
+* Accurate in high-dimensional spaces
+* Memory efficient
+
+Disadvantages
+* The algorithm is prone to over-fitting
+* No probability estimation
+* Computationally inefficiency requires small datasets (1000 rows+)
+
+SVM is good for image recognition, text category assignment, detecting spam, sentiment analysis, gene expression classification, regression, outlier detection, and clustering.

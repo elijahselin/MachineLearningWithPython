@@ -1,0 +1,68 @@
+Module 5 - Recommender Systems
+Notes
+
+
+
+***Module Introduction and Learning Objectives***
+
+Learning Objectives:
+*To understand the purpose and mechanism of recommendation systems.
+*To understand the different types of recommender systems.
+*To implement recommender systems on a real data set.
+
+
+
+***Intro to Recommender Systems***
+
+Recommender systems capture the pattern of people's behavior and use it to predict what else they might want or like.
+
+Advantages of recommender systems
+*Broader exposure
+*Possibility of continual usage or purchase of products
+*Provides better experience
+
+Two types of recommendation systems
+*Content-based: "Show me more of the same of what I've liked before."
+*Collaborative Filtering: "Tell me what's popular among my neighbors because I might like it too."
+*Hybrid recommender systems combine various recommendation mechanisms.
+
+Two types of recommendation system implementations:
+*Memory-based: Uses the entire user-item dataset to generate a recommendation. Uses statistical techniques to approximate users or items (e.g. pearson correlation, cosine simiilarity, euclidean distance, etc.)
+*Model Based: Develops a model of users in an attempt to learn their preferences. Models can be created using Machine Learning techniques such as regression, clustering, classification, etc.
+
+
+
+***Content-based Recommendation Systems***
+
+Tries to recommend items to users based on their profile.
+The users's profile revolves around that user's preferences and tastes. It's shaped based on user ratings, including the number of times that user has clicked on different items or liked them.
+The recommendation process is based on the similarity between those items.
+Similarity of itmes is measured based on the similarity in the content of those items categorically, such as tag, genre, etc.
+
+We create a vector to show the user's ratings for movies she's already watched. Then we encode the movies with one-hot encoding to the genres they belong to. Then we multiply the two matrices to get the weighted genre matrix that represents the interests of the user for each genre based on the movies that she's watched. Then we can aggregate the weighted genres and then normalize them to find the user profile. From this we can see which genres she likes and recommend movies in that genre.
+
+For recommendation, we encode them with one-hot encoding as well based on their genre. We take this matrix and multiply against the user profile matrix to get the weighted movie matrix. Then we aggregate the weighted ratings to ge the user's possible interest level in those movies, the Recoommendation Matrix.
+This model is very efficient but doesn't always work. It will only ever recommend movies with genres which exist in the user profile. This can be remedied using other recommender systems such as collaborative filtering.
+
+
+
+***Collaborative Filtering***
+
+Collaborative filtering takes into account the fact that relationships between products and people's interests exist.
+
+Collaborative filtering has two approaches:
+
+*User-based: based on users' neighborhood, it tries to find users who share similar rating patterns and reccomend items to a user that similarly behaving users have been choosing.
+1. find the similarity between users
+2. create a weighted ratings matrix based on peers
+3. multiply weighted ratings matrix against similarity matrix and normalize to get the potential rating of the user
+
+*Item-Based: based on items' similarity
+Similar to user based but based on items. If a user has already picked one item, then items that have had similar rating patterns will be recommended
+
+Challanges of collaborative filtering
+*Data sparsity- A large data set of users who generally rate only a limited number of items. Recommendations depend on these ratings
+*Cold start - refers to the difficulty the recommendation system has when there is a new user who hasn't built up profile yet.
+Scalability - As the number of users or items increase, the amount of data expands. Collaborative filtering algorithms will begin to suffer drops in performance due to growth and the similarity computation.
+
+Hybrid based recommender systems can solve some of these problems.
